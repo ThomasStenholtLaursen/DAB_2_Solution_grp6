@@ -1,0 +1,42 @@
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+using DAB_2_Solution_grp6.DataAccess;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
+
+builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddDbContext<CurrentDbContext>(
+    options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("Database"), sqlOptions =>
+        {
+            sqlOptions.MigrationsAssembly("DAB_2_Solution_grp6.Api");
+        });
+
+    });
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
