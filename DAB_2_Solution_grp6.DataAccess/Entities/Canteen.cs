@@ -7,7 +7,9 @@
         public string Address { get; }
         public string PostalCode { get; }
         public List<Rating> Ratings { get; } = new();
-
+        public List<Meal> Meals { get; } = new();
+        public List<Menu> Menus { get; } = new();
+        public List<JITMeal> JITMeals { get; } = new();
 
         public Canteen(Guid canteenId, string name, string address, string postalCode)
         {

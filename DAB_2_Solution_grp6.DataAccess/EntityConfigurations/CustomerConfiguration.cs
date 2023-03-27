@@ -20,8 +20,13 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
 
             builder.HasMany(x => x.Ratings)
                 .WithOne()
-                .HasForeignKey(x => x.CustomerId)
+                .HasForeignKey(x => x.Cpr)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            builder.HasMany(x => x.Reservations)
+                .WithOne()
+                .HasForeignKey(x => x.Cpr)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 

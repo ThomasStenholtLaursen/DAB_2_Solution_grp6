@@ -6,6 +6,7 @@
         public string FirstName { get; }
         public string LastName { get; }
         public List<Rating> Ratings { get; } = new();
+        public List<Reservation> Reservations { get; } = new();
 
         public Customer(string cpr, string firstName, string lastName)
         {
