@@ -5,18 +5,18 @@
         public Guid RatingId { get; }
         public decimal Stars { get; }
         public DateTime Created { get; }
-        public string CanteenId { get; }
+        public Guid CanteenId { get; }
         public string? Comment { get; }
         public string? Cpr { get; }
 
-        public Rating(Guid ratingId, decimal stars, DateTime created, string canteenId, string? comment, string? cpr)
+        public Rating(Guid ratingId, decimal stars, DateTime created, string? comment, string? cpr, Guid canteenId)
         {
             RatingId = ratingId;
             Stars = stars;
             Created = created;
-            CanteenId = canteenId;
             Comment = comment;
             Cpr = cpr;
+            CanteenId = canteenId;
         }
     }
 }

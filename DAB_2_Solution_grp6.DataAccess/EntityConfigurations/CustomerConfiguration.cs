@@ -8,26 +8,25 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
-            builder.HasKey(x => x.Cpr);
+            builder.HasKey(c => c.Cpr);
 
-            builder.Property(x => x.FirstName)
+            builder.Property(c => c.FirstName)
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder.Property(x => x.LastName)
+            builder.Property(c => c.LastName)
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder.HasMany(x => x.Ratings)
+            builder.HasMany(c => c.Ratings)
                 .WithOne()
-                .HasForeignKey(x => x.Cpr)
+                .HasForeignKey(r => r.Cpr)
                 .OnDelete(DeleteBehavior.SetNull);
 
-            builder.HasMany(x => x.Reservations)
+            builder.HasMany(c => c.Reservations)
                 .WithOne()
-                .HasForeignKey(x => x.Cpr)
+                .HasForeignKey(r => r.Cpr)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
-
 }

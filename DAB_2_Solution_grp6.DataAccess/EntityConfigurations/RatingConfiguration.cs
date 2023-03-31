@@ -8,15 +8,16 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Rating> builder)
         {
-            builder.HasKey(x => x.RatingId);
+            builder.HasKey(r => r.RatingId);
 
-            builder.Property(x => x.Created)
+            builder.Property(r => r.Created)
                 .IsRequired();
 
-            builder.Property(x => x.Stars)
+            builder.Property(r => r.Stars)
+                .HasPrecision(2, 1)
                 .IsRequired();
 
-            builder.Property(x => x.Comment)
+            builder.Property(r => r.Comment)
                 .IsRequired(false);
         }
     }

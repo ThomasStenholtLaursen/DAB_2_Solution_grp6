@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using DAB_2_Solution_grp6.DataAccess;
-using DAB_2_Solution_grp6.DataAccess.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 

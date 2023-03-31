@@ -3,15 +3,13 @@
     public class Reservation
     {
         public Guid ReservationId { get; }
-        public Guid MealId { get; set; }
         public string Cpr { get; }
         public DateTime Created { get; set; }
-        public List<Meal> Meals { get; } = new();
+        public List<Meal> Meals { get; private set; } = new();
 
-        public Reservation(Guid reservationId, Guid mealId, string cpr, DateTime created)
+        public Reservation(Guid reservationId, string cpr, DateTime created)
         {
             ReservationId = reservationId;
-            MealId = mealId;
             Cpr = cpr;
             Created = created;
         }

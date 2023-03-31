@@ -10,7 +10,7 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
         {
             builder.HasKey(x => x.MealId);
 
+            builder.Property(x => x.MealName).HasMaxLength(50);
         }
-
     }
 }

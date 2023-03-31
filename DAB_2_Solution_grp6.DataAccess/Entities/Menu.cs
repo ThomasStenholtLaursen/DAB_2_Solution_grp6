@@ -5,10 +5,9 @@
         public Guid MenuId { get; }
         public string WarmFoodName { get; }
         public string StreetFoodName { get; }
-        public DateTime Created { get; set; }
+        public DateTime Created { get; }
         public Guid CanteenId { get; }
-        public List<Reservation> Reservations { get; } = new();
-
+        public List<Reservation> Reservations { get; private set; } = new();
 
         public Menu(Guid menuId, string warmFoodName, string streetFoodName, DateTime created, Guid canteenId)
         {

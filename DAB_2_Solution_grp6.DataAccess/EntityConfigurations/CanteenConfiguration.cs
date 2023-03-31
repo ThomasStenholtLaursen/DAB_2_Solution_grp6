@@ -8,38 +8,38 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Canteen> builder)
         {
-            builder.HasKey(x => x.CanteenId);
+            builder.HasKey(c => c.CanteenId);
 
-            builder.Property(x => x.Address)
+            builder.Property(c => c.Address)
                 .IsRequired()
                 .HasMaxLength(100);
 
-            builder.Property(x => x.Name)
+            builder.Property(c => c.Name)
                 .IsRequired()
                 .HasMaxLength(30);
 
-            builder.Property(x => x.PostalCode)
+            builder.Property(c => c.PostalCode)
                 .IsRequired()
                 .HasMaxLength(4);
 
-            builder.HasMany(x => x.Ratings)
+            builder.HasMany(c => c.Ratings)
+                .WithOne()
+                .HasForeignKey(r => r.CanteenId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(c => c.Meals)
+                .WithOne()
+                .HasForeignKey(m => m.CanteenId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(c => c.Menus)
                 .WithOne()
                 .HasForeignKey(x => x.CanteenId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany(x => x.Meals)
+            builder.HasMany(c => c.JitMeals)
                 .WithOne()
-                .HasForeignKey(x => x.CanteenId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasMany(x => x.Menus)
-                .WithOne()
-                .HasForeignKey(x => x.CanteenId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasMany(x => x.JITMeals)
-                .WithOne()
-                .HasForeignKey(x => x.CanteenId)
+                .HasForeignKey(jm => jm.CanteenId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

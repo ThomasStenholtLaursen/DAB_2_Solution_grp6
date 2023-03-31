@@ -1,15 +1,15 @@
 ﻿namespace DAB_2_Solution_grp6.DataAccess.Entities
 {
-    public class JITMeal
+    public class JitMeal
     {
-        public Guid JITMealId { get; }
-        public string JITName { get; }
+        public Guid JitMealId { get; }
+        public string JitName { get; }
         public Guid CanteenId { get; }
 
-        public JITMeal(Guid jitMealId, string jitName, Guid canteenId)
+        public JitMeal(Guid jitMealId, string jitName, Guid canteenId)
         {
-            JITMealId = jitMealId;
-            JITName = jitName;
+            JitMealId = jitMealId;
+            JitName = jitName;
             CanteenId = canteenId;
         }
     }
