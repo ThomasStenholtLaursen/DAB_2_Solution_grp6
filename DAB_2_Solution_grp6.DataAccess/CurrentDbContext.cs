@@ -12,7 +12,9 @@ namespace DAB_2_Solution_grp6.DataAccess
         public DbSet<Reservation> Reservations { get; set; } = null!;
         public DbSet<Meal> Meals { get; set; } = null!;
         public DbSet<Menu> Menus { get; set; } = null!;
-        
+
+        public DbSet<JitMeal> JitMeals { get; set; } = null!;
+
         public CurrentDbContext(DbContextOptions<CurrentDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

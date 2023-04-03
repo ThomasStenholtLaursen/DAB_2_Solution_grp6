@@ -37,7 +37,7 @@ if (app.Environment.IsDevelopment())
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<CurrentDbContext>();
 
-    DataSeed.Seed(context);
+    await DataSeed.Seed(context);
 }
 
 app.UseHttpsRedirection();

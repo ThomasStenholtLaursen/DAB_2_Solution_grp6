@@ -39,7 +39,7 @@ namespace DAB_2_Solution_grp6.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "JitMeal",
+                name: "JitMeals",
                 columns: table => new
                 {
                     JitMealId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -48,9 +48,9 @@ namespace DAB_2_Solution_grp6.Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JitMeal", x => x.JitMealId);
+                    table.PrimaryKey("PK_JitMeals", x => x.JitMealId);
                     table.ForeignKey(
-                        name: "FK_JitMeal_Canteens_CanteenId",
+                        name: "FK_JitMeals_Canteens_CanteenId",
                         column: x => x.CanteenId,
                         principalTable: "Canteens",
                         principalColumn: "CanteenId",
@@ -157,9 +157,14 @@ namespace DAB_2_Solution_grp6.Api.Migrations
                         onDelete: ReferentialAction.SetNull);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Canteens",
+                columns: new[] { "CanteenId", "Address", "Name", "PostalCode" },
+                values: new object[] { new Guid("c2a81416-6b5f-4ed6-a1bd-a009174b1e40"), "dsadas", "blabla", "8000" });
+
             migrationBuilder.CreateIndex(
-                name: "IX_JitMeal_CanteenId",
-                table: "JitMeal",
+                name: "IX_JitMeals_CanteenId",
+                table: "JitMeals",
                 column: "CanteenId");
 
             migrationBuilder.CreateIndex(
@@ -197,7 +202,7 @@ namespace DAB_2_Solution_grp6.Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "JitMeal");
+                name: "JitMeals");
 
             migrationBuilder.DropTable(
                 name: "Meals");
