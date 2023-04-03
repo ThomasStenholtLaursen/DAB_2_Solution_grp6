@@ -7,7 +7,7 @@
         public string StreetFoodName { get; }
         public DateTime Created { get; }
         public Guid CanteenId { get; }
-        public List<Reservation> Reservations { get; private set; } = new();
+        public List<Reservation>? Reservations { get; private set; } = new();
 
         public Menu(Guid menuId, string warmFoodName, string streetFoodName, DateTime created, Guid canteenId)
         {

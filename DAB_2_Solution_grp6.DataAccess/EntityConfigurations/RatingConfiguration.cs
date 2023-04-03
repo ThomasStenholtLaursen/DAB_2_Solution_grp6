@@ -13,12 +13,20 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
             builder.Property(r => r.Created)
                 .IsRequired();
 
+            builder.Property(x => x.CanteenId)
+                .IsRequired();
+
             builder.Property(r => r.Stars)
                 .HasPrecision(2, 1)
                 .IsRequired();
 
+            builder.Property(x => x.Cpr)
+                .IsRequired(false)
+                .HasMaxLength(10);
+
             builder.Property(r => r.Comment)
-                .IsRequired(false);
+                .IsRequired(false)
+                .HasMaxLength(300);
         }
     }
 }

@@ -25,21 +25,25 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
             builder.HasMany(c => c.Ratings)
                 .WithOne()
                 .HasForeignKey(r => r.CanteenId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(c => c.Meals)
                 .WithOne()
                 .HasForeignKey(m => m.CanteenId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasMany(c => c.Menus)
                 .WithOne()
-                .HasForeignKey(x => x.CanteenId)
+                .HasForeignKey(me => me.CanteenId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(c => c.JitMeals)
                 .WithOne()
                 .HasForeignKey(jm => jm.CanteenId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

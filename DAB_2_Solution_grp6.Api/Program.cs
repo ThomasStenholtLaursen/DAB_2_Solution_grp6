@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using DAB_2_Solution_grp6.Api.Seed;
 using DAB_2_Solution_grp6.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +32,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<CurrentDbContext>();
+
+    DataSeed.Seed(context);
 }
 
 app.UseHttpsRedirection();

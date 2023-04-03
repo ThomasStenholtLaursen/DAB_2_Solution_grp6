@@ -20,6 +20,8 @@ namespace DAB_2_Solution_grp6.DataAccess
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CurrentDbContext).Assembly);
+
+            modelBuilder.Entity<Canteen>().HasData(new Canteen(Guid.NewGuid(), "blabla", "dsadas", "8000"));
         }
     }
 #pragma warning restore CS1591

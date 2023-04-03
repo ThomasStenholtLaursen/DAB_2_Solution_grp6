@@ -10,6 +10,9 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
         {
             builder.HasKey(c => c.Cpr);
 
+            builder.Property(x => x.Cpr)
+                .HasMaxLength(10);
+
             builder.Property(c => c.FirstName)
                 .IsRequired()
                 .HasMaxLength(50);
@@ -21,11 +24,13 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
             builder.HasMany(c => c.Ratings)
                 .WithOne()
                 .HasForeignKey(r => r.Cpr)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasMany(c => c.Reservations)
                 .WithOne()
                 .HasForeignKey(r => r.Cpr)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

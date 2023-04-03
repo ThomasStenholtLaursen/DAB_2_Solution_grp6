@@ -11,6 +11,8 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
             builder.HasKey(x => x.JitMealId);
 
             builder.Property(x => x.JitName).HasMaxLength(50);
+
+            builder.Property(x => x.CanteenId).IsRequired();
         }
     }
 }
