@@ -112,7 +112,8 @@ namespace DAB_2_Solution_grp6.Api.Migrations
                 {
                     ReservationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Cpr = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -124,8 +125,8 @@ namespace DAB_2_Solution_grp6.Api.Migrations
                         principalColumn: "Cpr",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reservations_Menus_ReservationId",
-                        column: x => x.ReservationId,
+                        name: "FK_Reservations_Menus_MenuId",
+                        column: x => x.MenuId,
                         principalTable: "Menus",
                         principalColumn: "MenuId",
                         onDelete: ReferentialAction.Cascade);
@@ -156,11 +157,6 @@ namespace DAB_2_Solution_grp6.Api.Migrations
                         principalColumn: "ReservationId",
                         onDelete: ReferentialAction.SetNull);
                 });
-
-            migrationBuilder.InsertData(
-                table: "Canteens",
-                columns: new[] { "CanteenId", "Address", "Name", "PostalCode" },
-                values: new object[] { new Guid("c2a81416-6b5f-4ed6-a1bd-a009174b1e40"), "dsadas", "blabla", "8000" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_JitMeals_CanteenId",
@@ -196,6 +192,11 @@ namespace DAB_2_Solution_grp6.Api.Migrations
                 name: "IX_Reservations_Cpr",
                 table: "Reservations",
                 column: "Cpr");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reservations_MenuId",
+                table: "Reservations",
+                column: "MenuId");
         }
 
         /// <inheritdoc />

@@ -12,7 +12,6 @@ namespace DAB_2_Solution_grp6.DataAccess
         public DbSet<Reservation> Reservations { get; set; } = null!;
         public DbSet<Meal> Meals { get; set; } = null!;
         public DbSet<Menu> Menus { get; set; } = null!;
-
         public DbSet<JitMeal> JitMeals { get; set; } = null!;
 
         public CurrentDbContext(DbContextOptions<CurrentDbContext> options) : base(options) { }
@@ -23,7 +22,7 @@ namespace DAB_2_Solution_grp6.DataAccess
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CurrentDbContext).Assembly);
 
-            modelBuilder.Entity<Canteen>().HasData(new Canteen(Guid.NewGuid(), "blabla", "dsadas", "8000"));
+            //modelBuilder.Entity<Canteen>().HasData(new Canteen(Guid.NewGuid(), "blabla", "dsadas", "8000"));
         }
     }
 #pragma warning restore CS1591

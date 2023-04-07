@@ -46,15 +46,6 @@ namespace DAB_2_Solution_grp6.Api.Migrations
                     b.HasKey("CanteenId");
 
                     b.ToTable("Canteens");
-
-                    b.HasData(
-                        new
-                        {
-                            CanteenId = new Guid("c2a81416-6b5f-4ed6-a1bd-a009174b1e40"),
-                            Address = "dsadas",
-                            Name = "blabla",
-                            PostalCode = "8000"
-                        });
                 });
 
             modelBuilder.Entity("DAB_2_Solution_grp6.DataAccess.Entities.Customer", b =>
@@ -190,6 +181,7 @@ namespace DAB_2_Solution_grp6.Api.Migrations
             modelBuilder.Entity("DAB_2_Solution_grp6.DataAccess.Entities.Reservation", b =>
                 {
                     b.Property<Guid>("ReservationId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Cpr")
@@ -200,9 +192,14 @@ namespace DAB_2_Solution_grp6.Api.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("MenuId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("ReservationId");
 
                     b.HasIndex("Cpr");
+
+                    b.HasIndex("MenuId");
 
                     b.ToTable("Reservations");
                 });
@@ -258,7 +255,7 @@ namespace DAB_2_Solution_grp6.Api.Migrations
 
                     b.HasOne("DAB_2_Solution_grp6.DataAccess.Entities.Menu", null)
                         .WithMany("Reservations")
-                        .HasForeignKey("ReservationId")
+                        .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

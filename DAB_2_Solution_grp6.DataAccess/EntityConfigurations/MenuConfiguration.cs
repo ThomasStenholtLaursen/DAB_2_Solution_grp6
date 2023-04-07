@@ -26,7 +26,7 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
 
             builder.HasMany(x => x.Reservations)
                 .WithOne()
-                .HasForeignKey(x => x.ReservationId)
+                .HasForeignKey(x => x.MenuId)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
         }
