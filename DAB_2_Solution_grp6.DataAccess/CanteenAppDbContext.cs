@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DAB_2_Solution_grp6.DataAccess
 {
 #pragma warning disable CS1591
-    public class CurrentDbContext : DbContext
+    public class CanteenAppDbContext : DbContext
     {
         public DbSet<Canteen> Canteens { get; set; } = null!;
         public DbSet<Customer> Customers { get; set; } = null!;
@@ -14,13 +14,13 @@ namespace DAB_2_Solution_grp6.DataAccess
         public DbSet<Menu> Menus { get; set; } = null!;
         public DbSet<JitMeal> JitMeals { get; set; } = null!;
 
-        public CurrentDbContext(DbContextOptions<CurrentDbContext> options) : base(options) { }
+        public CanteenAppDbContext(DbContextOptions<CanteenAppDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CurrentDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CanteenAppDbContext).Assembly);
 
             //modelBuilder.Entity<Canteen>().HasData(new Canteen(Guid.NewGuid(), "blabla", "dsadas", "8000"));
         }

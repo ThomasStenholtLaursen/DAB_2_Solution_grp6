@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAB_2_Solution_grp6.Api.Migrations
 {
-    [DbContext(typeof(CurrentDbContext))]
+    [DbContext(typeof(CanteenAppDbContext))]
     partial class CurrentDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -6,7 +6,7 @@ namespace DAB_2_Solution_grp6.Api.Seed
 {
     public static class DataSeed
     {
-        public static async Task Seed(CurrentDbContext context)
+        public static async Task Seed(CanteenAppDbContext context)
         {
 
             var dataExists =
@@ -34,7 +34,7 @@ namespace DAB_2_Solution_grp6.Api.Seed
             //await SeedJustInTimeMeals(context, canteenIds);
         }
 
-        private static async Task SeedCanteens(CurrentDbContext context, IReadOnlyList<Guid> canteenIds)
+        private static async Task SeedCanteens(CanteenAppDbContext context, IReadOnlyList<Guid> canteenIds)
         {
             var canteens = new[]
             {
@@ -45,7 +45,7 @@ namespace DAB_2_Solution_grp6.Api.Seed
             await context.SaveChangesAsync();
         }
 
-        private static async Task SeedCustomers(CurrentDbContext context, IReadOnlyList<string> cprs)
+        private static async Task SeedCustomers(CanteenAppDbContext context, IReadOnlyList<string> cprs)
         {
             var customers = new[]
             {
@@ -60,7 +60,7 @@ namespace DAB_2_Solution_grp6.Api.Seed
             await context.SaveChangesAsync();
         }
 
-        private static async Task SeedRatings(CurrentDbContext context, IReadOnlyList<Guid> canteenIds,
+        private static async Task SeedRatings(CanteenAppDbContext context, IReadOnlyList<Guid> canteenIds,
             IReadOnlyList<string> cprs)
         {
             var ratings = new[]
@@ -73,7 +73,7 @@ namespace DAB_2_Solution_grp6.Api.Seed
             await context.SaveChangesAsync();
         }
 
-        //private static async Task SeedMenus(CurrentDbContext context, IReadOnlyList<Guid> canteenIds, IReadOnlyList<Guid> menuIds)
+        //private static async Task SeedMenus(CanteenAppDbContext context, IReadOnlyList<Guid> canteenIds, IReadOnlyList<Guid> menuIds)
         //{
         //    var menus = new[]
         //    {
@@ -84,7 +84,7 @@ namespace DAB_2_Solution_grp6.Api.Seed
         //    await context.SaveChangesAsync();
         //}
 
-        //private static async Task SeedReservations(CurrentDbContext context, IReadOnlyList<Guid> menuIds, IReadOnlyList<string> socialSecurityNumbers, IReadOnlyList<Guid> reservationIds)
+        //private static async Task SeedReservations(CanteenAppDbContext context, IReadOnlyList<Guid> menuIds, IReadOnlyList<string> socialSecurityNumbers, IReadOnlyList<Guid> reservationIds)
         //{
         //    var reservations = new[]
         //    {
@@ -95,7 +95,7 @@ namespace DAB_2_Solution_grp6.Api.Seed
         //    await context.SaveChangesAsync();
         //}
 
-        //private static async Task SeedMeals(CurrentDbContext context, IReadOnlyList<Guid> canteenIds, IReadOnlyList<Guid> reservationIds)
+        //private static async Task SeedMeals(CanteenAppDbContext context, IReadOnlyList<Guid> canteenIds, IReadOnlyList<Guid> reservationIds)
         //{
         //    var meals = new[]
         //    {
@@ -107,7 +107,7 @@ namespace DAB_2_Solution_grp6.Api.Seed
         //    await context.SaveChangesAsync();
         //}
 
-        //private static async Task SeedJustInTimeMeals(CurrentDbContext context, IReadOnlyList<Guid> canteenIds)
+        //private static async Task SeedJustInTimeMeals(CanteenAppDbContext context, IReadOnlyList<Guid> canteenIds)
         //{
         //    var jitMeals = new[]
         //    {

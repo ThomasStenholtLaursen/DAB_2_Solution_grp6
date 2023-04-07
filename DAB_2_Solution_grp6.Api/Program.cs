@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddAutoMapper(typeof(Program));
 
-builder.Services.AddDbContext<CurrentDbContext>(
+builder.Services.AddDbContext<CanteenAppDbContext>(
     options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("Database"), sqlOptions =>
@@ -35,7 +35,7 @@ if (app.Environment.IsDevelopment())
 
     using var scope = app.Services.CreateScope();
     var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<CurrentDbContext>();
+    var context = services.GetRequiredService<CanteenAppDbContext>();
 
     await DataSeed.Seed(context);
 }
