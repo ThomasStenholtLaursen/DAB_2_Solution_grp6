@@ -1,0 +1,27 @@
+﻿using DAB_2_Solution_grp6.DataAccess.Exceptions;
+using Microsoft.EntityFrameworkCore;
+
+namespace DAB_2_Solution_grp6.DataAccess.Repositories.Reservation
+{
+    public class ReservationRepository : IReservationRepository
+    {
+        private readonly CanteenAppDbContext _dbContext;
+
+        public ReservationRepository(CanteenAppDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public async Task<Entities.Reservation> GetReservationById(string cpr)
+        {
+            var reservation = await _dbContext.Reservations.Include(x => x.Meals).FirstOrDefaultAsync(x => x.Cpr == cpr);
+
+            if (reservation != null)
+            {
+                return reservation;
+            }
+
+            throw new ReservationNotFoundException();
+        }
+    }
+}

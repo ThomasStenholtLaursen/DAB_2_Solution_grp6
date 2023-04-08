@@ -2,10 +2,13 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using DAB_2_Solution_grp6.Api.Seed;
 using DAB_2_Solution_grp6.DataAccess;
+using DAB_2_Solution_grp6.DataAccess.Repositories.Global;
+using DAB_2_Solution_grp6.DataAccess.Repositories.Reservation;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
@@ -25,6 +28,10 @@ builder.Services.AddDbContext<CanteenAppDbContext>(
         });
 
     });
+
+builder.Services.AddScoped<IGlobalRepository, GlobalRepository>();
+builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
+
 
 var app = builder.Build();
 

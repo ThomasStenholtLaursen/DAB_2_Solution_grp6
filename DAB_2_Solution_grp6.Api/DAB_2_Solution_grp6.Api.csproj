@@ -31,13 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\MealsController\" />
-    <Folder Include="Controllers\CanteenController\" />
-    <Folder Include="Controllers\ReservationController\" />
-    <Folder Include="Controllers\RatingController\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\DAB_2_Solution_grp6.DataAccess\DAB_2_Solution_grp6.DataAccess.csproj" />
   </ItemGroup>
 
