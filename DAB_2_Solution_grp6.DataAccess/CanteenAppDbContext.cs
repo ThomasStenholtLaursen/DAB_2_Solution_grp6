@@ -26,5 +26,4 @@ namespace DAB_2_Solution_grp6.DataAccess
         }
     }
 #pragma warning restore CS1591
-
 }

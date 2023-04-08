@@ -16,7 +16,7 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
             builder.Property(x => x.Created)
                 .IsRequired();
 
-            builder.Property(x => x.WarmFoodName)
+            builder.Property(x => x.WarmDishName)
                 .IsRequired()
                 .HasMaxLength(50);
 

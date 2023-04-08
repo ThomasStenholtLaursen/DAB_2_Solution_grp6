@@ -10,12 +10,16 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
         {
             builder.HasKey(x => x.ReservationId);
 
-            builder.Property(x => x.Cpr)
-                .IsRequired()
-                .HasMaxLength(10);
+            builder.Property(x => x.WarmQuantity).IsRequired(false);
+
+            builder.Property(x => x.StreetQuantity).IsRequired(false);
 
             builder.Property(x => x.Created)
                 .IsRequired();
+
+            builder.Property(x => x.Cpr)
+                .IsRequired()
+                .HasMaxLength(10);
 
             builder.HasMany(x => x.Meals)
                 .WithOne()

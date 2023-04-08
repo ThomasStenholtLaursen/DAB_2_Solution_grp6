@@ -62,7 +62,7 @@ namespace DAB_2_Solution_grp6.Api.Migrations
                 columns: table => new
                 {
                     MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    WarmFoodName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    WarmDishName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     StreetFoodName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CanteenId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
@@ -111,8 +111,10 @@ namespace DAB_2_Solution_grp6.Api.Migrations
                 columns: table => new
                 {
                     ReservationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Cpr = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    WarmQuantity = table.Column<int>(type: "int", nullable: true),
+                    StreetQuantity = table.Column<int>(type: "int", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Cpr = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>

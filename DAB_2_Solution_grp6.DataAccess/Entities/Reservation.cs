@@ -3,16 +3,20 @@
     public class Reservation
     {
         public Guid ReservationId { get; }
-        public string Cpr { get; }
+        public int? WarmQuantity { get; }
+        public int? StreetQuantity { get; }
         public DateTime Created { get; }
+        public string Cpr { get; }
         public Guid MenuId { get; }
         public List<Meal>? Meals { get; private set; } = new();
 
-        public Reservation(Guid reservationId, string cpr, DateTime created, Guid menuId)
+        public Reservation(Guid reservationId, int? warmQuantity, int? streetQuantity, DateTime created, string cpr, Guid menuId)
         {
             ReservationId = reservationId;
-            Cpr = cpr;
+            WarmQuantity = warmQuantity;
+            StreetQuantity = streetQuantity;
             Created = created;
+            Cpr = cpr;
             MenuId = menuId;
         }
     }
