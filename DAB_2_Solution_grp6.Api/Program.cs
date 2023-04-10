@@ -2,7 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using DAB_2_Solution_grp6.Api.Seed;
 using DAB_2_Solution_grp6.DataAccess;
+using DAB_2_Solution_grp6.DataAccess.Repositories.Canteen;
 using DAB_2_Solution_grp6.DataAccess.Repositories.Global;
+using DAB_2_Solution_grp6.DataAccess.Repositories.Menu;
 using DAB_2_Solution_grp6.DataAccess.Repositories.Reservation;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,7 +33,8 @@ builder.Services.AddDbContext<CanteenAppDbContext>(
 
 builder.Services.AddScoped<IGlobalRepository, GlobalRepository>();
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
-
+builder.Services.AddScoped<ICanteenRepository, CanteenRepository>();
+builder.Services.AddScoped<IMenuRepository, MenuRepository>();
 
 var app = builder.Build();
 
