@@ -19,7 +19,12 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
         private readonly ICanteenRepository _canteenRepository;
         private readonly IMenuRepository _menuRepository;
 
-        public CanteenAppController(IMapper mapper, IGlobalRepository globalRepository, IReservationRepository reservationRepository, ICanteenRepository canteenRepository, IMenuRepository menuRepository)
+        public CanteenAppController(
+            IMapper mapper, 
+            IGlobalRepository globalRepository, 
+            IReservationRepository reservationRepository, 
+            ICanteenRepository canteenRepository, 
+            IMenuRepository menuRepository)
         {
             _mapper = mapper;
             _globalRepository = globalRepository;
@@ -28,18 +33,19 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
             _menuRepository = menuRepository;
         }
 
-
         /// <summary>
         /// Gets the day's menu options for a canteen given as input
         /// </summary>
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("canteens/{canteenName}/menus/today")]
         public async Task<ActionResult> GetDailyMenuOptions(string canteenName)
         {
             try
             {
-                var menu = await _canteenRepository.GetDailyMenuForCanteen(canteenName);
+                var menu = (await _canteenRepository.GetCanteenByNameAsync(canteenName)).Menus!
+                    .FirstOrDefault(x => x.Created.Date == DateTime.Today);
 
                 var response = _mapper.Map<DailyMenuResponse>(menu);
 
@@ -85,22 +91,23 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
         {
             try
             {
-                var reservations = await _reservationRepository.GetTheDailyReservationsForCanteen(canteenName);
-                var menu = await _menuRepository.GetMenuByIdAsync(reservations[0].MenuId);
+                var canteen = await _canteenRepository.GetCanteenByNameAsync(canteenName);
 
-                var warmQuantitySum = reservations.Sum(r => r.WarmQuantity ?? 0);
-                var streetQuantitySum = reservations.Sum(r => r.StreetQuantity ?? 0);
+                if (canteen.Menus == null) 
+                    return NotFound($"Could not find any menus for '{canteenName}'");
 
+                var menu = canteen.Menus.FirstOrDefault(x => x.Created.Date == DateTime.Today);
+                    
                 var response = new ReservationsQuantityResponse
                 {
                     WarmDish = new WarmDish
                     {
-                        Amount = warmQuantitySum,
+                        Amount = menu!.Reservations!.Sum(r => r.WarmQuantity ?? 0),
                         Name = menu!.WarmDishName
                     },
                     StreetFood = new StreetFood
                     {
-                        Amount = streetQuantitySum,
+                        Amount = menu!.Reservations!.Sum(r => r.StreetQuantity ?? 0),
                         Name = menu!.StreetFoodName
                     }
                 };
@@ -113,16 +120,33 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
             }
         }
 
+        /// <summary>
+        /// Just-in-time meal options and the available (canceled) daily menu
+        /// </summary>
+        /// <response code="200">The customer was found</response>
+        /// <response code="404">The customer could not be found</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("canteens/{canteenName}/availableMeals")]
-        public async Task<ActionResult> Test(string canteenName)
+        public async Task<ActionResult> GetAvailableMealsForCanteen(string canteenName)
         {
             try
             {
-                var menu = await _canteenRepository.GetDailyMenuForCanteen(canteenName);
+                var canteen = await _canteenRepository.GetCanteenByNameAsync(canteenName);
 
-                var response = _mapper.Map<DailyMenuResponse>(menu);
+                var canceledMeals = canteen.Menus!
+                    .FirstOrDefault(x => x.Created.Date == DateTime.Today)?.Reservations!
+                    .SelectMany(x => x.Meals!)
+                    .Where(x => x.ReservationId == null)
+                    .ToList();
+
+                var jitMeals = canteen.JitMeals;
+
+                var response = new AvailableMealsResponse
+                {
+                    CanceledMeals = canceledMeals!,
+                    JitMeals = jitMeals!
+                };
 
                 return Ok(response);
             }
@@ -131,6 +155,8 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
                 return BadRequest(canteenName);
             }
         }
+
+
 
 
 
