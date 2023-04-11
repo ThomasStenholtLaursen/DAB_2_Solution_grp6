@@ -12,14 +12,6 @@ namespace DAB_2_Solution_grp6.DataAccess.Repositories.Canteen
             _dbContext = dbContext;
         }
 
-        public async Task<Entities.Canteen> GetCanteenByIdAsync(Guid canteenId)
-        {
-            var canteen = await _dbContext.Canteens
-                .FirstOrDefaultAsync(x => x.CanteenId == canteenId);
-
-            return canteen ?? throw new CanteenNotFoundException();
-        }
-
         public async Task<List<Entities.Canteen>> GetAllCanteens()
         {
             var canteens = await _dbContext.Canteens.ToListAsync();
