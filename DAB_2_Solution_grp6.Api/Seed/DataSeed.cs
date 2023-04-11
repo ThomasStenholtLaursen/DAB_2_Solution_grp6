@@ -19,16 +19,16 @@ namespace DAB_2_Solution_grp6.Api.Seed
 
             if (dataExists) return;
 
-            var socialSecurityNumbers = GenerateSocialSecurityNumbers(10);
+            var auIds = GenerateAuIds(10);
             var canteenIds = GenerateIdentifiers(10);
             var menuIds = GenerateIdentifiers(10);
             var reservationIds = GenerateIdentifiers(10);
 
             await SeedCanteens(context, canteenIds);
-            await SeedCustomers(context, socialSecurityNumbers);
-            await SeedRatings(context, canteenIds, socialSecurityNumbers);
+            await SeedCustomers(context, auIds);
+            await SeedRatings(context, canteenIds, auIds);
             await SeedMenus(context, canteenIds, menuIds);
-            await SeedReservations(context, menuIds, socialSecurityNumbers, reservationIds);
+            await SeedReservations(context, menuIds, auIds, reservationIds);
             await SeedMeals(context, canteenIds, reservationIds);
             await SeedJustInTimeMeals(context, canteenIds);
         }
@@ -48,15 +48,15 @@ namespace DAB_2_Solution_grp6.Api.Seed
             await context.SaveChangesAsync();
         }
 
-        private static async Task SeedCustomers(CanteenAppDbContext context, IReadOnlyList<string> cprs)
+        private static async Task SeedCustomers(CanteenAppDbContext context, IReadOnlyList<string> auIds)
         {
             var customers = new[]
             {
-                new Customer(cprs[0], "Jens", "Henriksen"),
-                new Customer(cprs[1], "Gitte", "Frederiksen"),
-                new Customer(cprs[2], "Claus", "Nielsen"),
-                new Customer(cprs[3], "Hanne", "Sørensen"),
-                new Customer(cprs[4], "Hans", "Larsen")
+                new Customer(auIds[0], "Jens", "Henriksen"),
+                new Customer(auIds[1], "Gitte", "Frederiksen"),
+                new Customer(auIds[2], "Claus", "Nielsen"),
+                new Customer(auIds[3], "Hanne", "Sørensen"),
+                new Customer(auIds[4], "Hans", "Larsen")
             };
 
             context.Customers.AddRange(customers);
@@ -179,13 +179,13 @@ namespace DAB_2_Solution_grp6.Api.Seed
             await context.SaveChangesAsync();
         }
 
-        private static async Task SeedReservations(CanteenAppDbContext context, IReadOnlyList<Guid> menuIds, IReadOnlyList<string> cprs, IReadOnlyList<Guid> reservationIds)
+        private static async Task SeedReservations(CanteenAppDbContext context, IReadOnlyList<Guid> menuIds, IReadOnlyList<string> auIds, IReadOnlyList<Guid> reservationIds)
         {
             var reservations = new[]
             {
-                new Reservation(reservationIds[0], 1, 2, DateTime.Now, cprs[0], menuIds[0]),
-                new Reservation(reservationIds[1], 0, 2, DateTime.Now, cprs[1], menuIds[0]),
-                new Reservation(reservationIds[2], 4, 2, DateTime.Now, cprs[2], menuIds[1]),
+                new Reservation(reservationIds[0], 1, 2, DateTime.Now, auIds[0], menuIds[0]),
+                new Reservation(reservationIds[1], 0, 2, DateTime.Now, auIds[1], menuIds[0]),
+                new Reservation(reservationIds[2], 4, 2, DateTime.Now, auIds[2], menuIds[1]),
 
             };
 
@@ -266,26 +266,20 @@ namespace DAB_2_Solution_grp6.Api.Seed
             return ids;
         }
 
-        private static List<string> GenerateSocialSecurityNumbers(int count)
+        private static List<string> GenerateAuIds(int count)
         {
-            var resultList = new List<string>();
+            var ids = new List<string>();
 
-            var random = new Random();
-
-            const string numbers = "0123456789";
-
-            for (var j = 0; j < count; j++)
+            for (var i = 0; i < count; i++)
             {
-                var result = new char[10];
+                var randomNumber = new Random().Next(100000, 999999);
 
-                for (var i = 0; i < result.Length; i++)
-                {
-                    result[i] = numbers[random.Next(numbers.Length)];
-                }
+                var id = "AU" + randomNumber;
 
-                resultList.Add(new string(result));
+                ids.Add(id);
             }
-            return resultList;
+
+            return ids;
         }
     }
 }

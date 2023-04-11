@@ -2,6 +2,6 @@
 {
     public interface IReservationRepository
     {
-        Task<Entities.Reservation> GetReservationById(string cpr);
+        Task<Entities.Reservation> GetReservationById(string auId);
     }
 }

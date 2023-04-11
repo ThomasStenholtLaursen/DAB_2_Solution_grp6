@@ -7,15 +7,15 @@
         public DateTime Created { get; }
         public Guid CanteenId { get; }
         public string? Comment { get; }
-        public string? Cpr { get; }
+        public string? AuId { get; }
 
-        public Rating(Guid ratingId, decimal stars, DateTime created, string? comment, string? cpr, Guid canteenId)
+        public Rating(Guid ratingId, decimal stars, DateTime created, string? comment, string? auId, Guid canteenId)
         {
             RatingId = ratingId;
             Stars = stars;
             Created = created;
             Comment = comment;
-            Cpr = cpr;
+            AuId = auId;
             CanteenId = canteenId;
         }
     }

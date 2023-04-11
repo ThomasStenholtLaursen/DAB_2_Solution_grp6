@@ -12,11 +12,11 @@ namespace DAB_2_Solution_grp6.DataAccess.Repositories.Reservation
             _dbContext = dbContext;
         }
 
-        public async Task<Entities.Reservation> GetReservationById(string cpr)
+        public async Task<Entities.Reservation> GetReservationById(string auId)
         {
             var reservation = await _dbContext.Reservations
                 .Include(reservation => reservation.Meals)
-                .FirstOrDefaultAsync(reservation => reservation.Cpr == cpr && reservation.Created.Date == DateTime.Today);
+                .FirstOrDefaultAsync(reservation => reservation.AuId == auId && reservation.Created.Date == DateTime.Today);
 
             return reservation ?? throw new ReservationNotFoundException();
         }

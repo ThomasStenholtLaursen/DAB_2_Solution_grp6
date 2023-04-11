@@ -17,7 +17,7 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
             builder.Property(x => x.Created)
                 .IsRequired();
 
-            builder.Property(x => x.Cpr)
+            builder.Property(x => x.AuId)
                 .IsRequired()
                 .HasMaxLength(10);
 

@@ -20,7 +20,7 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
                 .HasPrecision(2, 1)
                 .IsRequired();
 
-            builder.Property(x => x.Cpr)
+            builder.Property(x => x.AuId)
                 .IsRequired(false)
                 .HasMaxLength(10);
 

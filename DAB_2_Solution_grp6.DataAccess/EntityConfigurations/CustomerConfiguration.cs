@@ -8,9 +8,9 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
-            builder.HasKey(c => c.Cpr);
+            builder.HasKey(c => c.AuId);
 
-            builder.Property(x => x.Cpr)
+            builder.Property(x => x.AuId)
                 .HasMaxLength(10);
 
             builder.Property(c => c.FirstName)
@@ -23,13 +23,13 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
 
             builder.HasMany(c => c.Ratings)
                 .WithOne()
-                .HasForeignKey(r => r.Cpr)
+                .HasForeignKey(r => r.AuId)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasMany(c => c.Reservations)
                 .WithOne()
-                .HasForeignKey(r => r.Cpr)
+                .HasForeignKey(r => r.AuId)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
         }

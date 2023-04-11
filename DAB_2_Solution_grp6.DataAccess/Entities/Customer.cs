@@ -2,15 +2,15 @@
 {
     public class Customer
     {
-        public string Cpr { get; }
+        public string AuId { get; }
         public string FirstName { get; }
         public string LastName { get; }
         public List<Rating>? Ratings { get; private set; } = new();
         public List<Reservation>? Reservations { get; private set; } = new();
 
-        public Customer(string cpr, string firstName, string lastName)
+        public Customer(string auId, string firstName, string lastName)
         {
-            Cpr = cpr;
+            AuId = auId;
             FirstName = firstName;
             LastName = lastName;
         }

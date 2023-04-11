@@ -63,12 +63,12 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
         /// </summary>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpGet("query2/{cpr}")]
-        public async Task<ActionResult> GetReservationById(string cpr)
+        [HttpGet("query2/{auId}")]
+        public async Task<ActionResult> GetReservationById(string auId)
         {
             try
             {
-                var reservation = await _reservationRepository.GetReservationById(cpr);
+                var reservation = await _reservationRepository.GetReservationById(auId);
 
                 var canteenId = await _menuRepository.GetCanteenIdForMenuAsync(reservation.MenuId);
 
@@ -90,7 +90,7 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
             }
             catch (Exception ex) when (ex is ReservationNotFoundException or MenuNotFoundException)
             {
-                return NotFound(cpr);
+                return NotFound(auId);
             }
         }
 
