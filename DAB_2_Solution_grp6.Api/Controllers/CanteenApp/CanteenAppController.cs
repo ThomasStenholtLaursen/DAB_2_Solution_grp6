@@ -40,8 +40,7 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
         /// </summary>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpGet("canteens/{canteenName}/menus/today")]
+        [HttpGet("query1/{canteenName}")]
         public async Task<ActionResult> GetDailyMenuOptions(string canteenName)
         {
             try
@@ -53,20 +52,18 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
 
                 return Ok(response);
             }
-            catch (Exception)
+            catch (CanteenNotFoundException)
             {
-                return BadRequest(canteenName);
+                return NotFound(canteenName);
             }
         }
 
         /// <summary>
         /// Query (2) Get the reservation for a given customer
         /// </summary>
-        /// <response code="200">The customer was found</response>
-        /// <response code="404">The customer could not be found</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpGet("customers/{cpr}")]
+        [HttpGet("query2/{cpr}")]
         public async Task<ActionResult> GetReservationById(string cpr)
         {
             try
@@ -100,11 +97,9 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
         /// <summary>
         /// Query (3) Number of reservations for each of the daily menu options for a canteen
         /// </summary>
-        /// <response code="200">The customer was found</response>
-        /// <response code="404">The customer could not be found</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpGet("canteens/{canteenName}/reservations/today")]
+        [HttpGet("query3/{canteenName}")]
         public async Task<ActionResult> GetReservationsQuantity(string canteenName)
         {
             try
@@ -141,11 +136,9 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
         /// <summary>
         /// Query (4) Just-in-time meal options and the available (canceled) daily menu
         /// </summary>
-        /// <response code="200">The customer was found</response>
-        /// <response code="404">The customer could not be found</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpGet("canteens/{canteenName}/availableMeals")]
+        [HttpGet("query4/{canteenName}")]
         public async Task<ActionResult> GetAvailableMealsForCanteen(string canteenName)
         {
             try
@@ -173,11 +166,9 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
         /// <summary>
         /// Query (5) available (canceled) daily menu in the nearby canteens
         /// </summary>
-        /// <response code="200">The customer was found</response>
-        /// <response code="404">The customer could not be found</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpGet("canteens/{canteenName}/nearby")]
+        [HttpGet("query5/{canteenName}")]
         public async Task<ActionResult> GetAvailableMealsInNearbyCanteen(string canteenName)
         {
             try
@@ -207,11 +198,9 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
         /// <summary>
         /// Query (6) average ratings from all the canteens from top to bottom
         /// </summary>
-        /// <response code="200">The customer was found</response>
-        /// <response code="404">The customer could not be found</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpGet("canteens/rating")]
+        [HttpGet("query6")]
         public async Task<ActionResult> GetAverageRatingForCanteens()
         {
             try
@@ -223,7 +212,7 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
                     CanteenRatings = canteens.Select(canteen => new CanteenRating
                     {
                         Name = canteen.Name,
-                        AvgRating = canteen.Ratings?.Any() == true ? canteen.Ratings.Average(rating => rating.Stars) : 0
+                        AvgRating = canteen.Ratings?.Any() == true ? Math.Round(canteen.Ratings.Average(rating => rating.Stars), 1) : 0
                     })
                         .OrderByDescending(canteenRating => canteenRating.AvgRating)
                         .ToList()
