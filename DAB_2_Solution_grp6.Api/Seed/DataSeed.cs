@@ -14,8 +14,7 @@ namespace DAB_2_Solution_grp6.Api.Seed
                 await context.Ratings.AnyAsync() ||
                 await context.Menus.AnyAsync() ||
                 await context.Reservations.AnyAsync() ||
-                await context.Meals.AnyAsync() ||
-                await context.JitMeals.AnyAsync();
+                await context.Meals.AnyAsync();
 
             if (dataExists) return;
 
@@ -30,7 +29,6 @@ namespace DAB_2_Solution_grp6.Api.Seed
             await SeedMenus(context, canteenIds, menuIds);
             await SeedReservations(context, menuIds, auIds, reservationIds);
             await SeedMeals(context, canteenIds, reservationIds);
-            await SeedJustInTimeMeals(context, canteenIds);
         }
 
         private static async Task SeedCanteens(CanteenAppDbContext context, IReadOnlyList<Guid> canteenIds)
@@ -216,41 +214,6 @@ namespace DAB_2_Solution_grp6.Api.Seed
             };
 
             context.Meals.AddRange(meals);
-            await context.SaveChangesAsync();
-        }
-
-        private static async Task SeedJustInTimeMeals(CanteenAppDbContext context, IReadOnlyList<Guid> canteenIds)
-        {
-            var jitMeals = new[]
-            {
-                new JitMeal(Guid.NewGuid(), "Sandwich", canteenIds[0]),
-                new JitMeal(Guid.NewGuid(), "Sandwich", canteenIds[0]),
-                new JitMeal(Guid.NewGuid(), "Sandwich", canteenIds[0]),
-                new JitMeal(Guid.NewGuid(), "Sandwich", canteenIds[0]),
-                new JitMeal(Guid.NewGuid(), "Sandwich", canteenIds[0]),
-                new JitMeal(Guid.NewGuid(), "Sandwich", canteenIds[0]),
-                new JitMeal(Guid.NewGuid(), "Sandwich", canteenIds[1]),
-                new JitMeal(Guid.NewGuid(), "Sandwich", canteenIds[1]),
-                new JitMeal(Guid.NewGuid(), "Chocolate cake", canteenIds[1]),
-                new JitMeal(Guid.NewGuid(), "Chocolate cake", canteenIds[1]),
-                new JitMeal(Guid.NewGuid(), "Chocolate cake", canteenIds[1]),
-                new JitMeal(Guid.NewGuid(), "Chocolate cake", canteenIds[1]),
-                new JitMeal(Guid.NewGuid(), "Panini with ham", canteenIds[2]),
-                new JitMeal(Guid.NewGuid(), "Panini with ham", canteenIds[2]),
-                new JitMeal(Guid.NewGuid(), "Panini with ham", canteenIds[2]),
-                new JitMeal(Guid.NewGuid(), "Panini with ham", canteenIds[2]),
-                new JitMeal(Guid.NewGuid(), "Vegan salad", canteenIds[3]),
-                new JitMeal(Guid.NewGuid(), "Vegan salad", canteenIds[3]),
-                new JitMeal(Guid.NewGuid(), "Vegan salad", canteenIds[3]),
-                new JitMeal(Guid.NewGuid(), "Vegan salad", canteenIds[3]),
-                new JitMeal(Guid.NewGuid(), "Homemade snickers", canteenIds[4]),
-                new JitMeal(Guid.NewGuid(), "Homemade snickers", canteenIds[4]),
-                new JitMeal(Guid.NewGuid(), "Homemade snickers", canteenIds[4]),
-                new JitMeal(Guid.NewGuid(), "Homemade snickers", canteenIds[4]),
-                new JitMeal(Guid.NewGuid(), "Homemade snickers", canteenIds[4]),
-            };
-
-            context.JitMeals.AddRange(jitMeals);
             await context.SaveChangesAsync();
         }
 

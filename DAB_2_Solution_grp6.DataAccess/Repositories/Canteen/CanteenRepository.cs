@@ -40,11 +40,10 @@ namespace DAB_2_Solution_grp6.DataAccess.Repositories.Canteen
             return canteen ?? throw new CanteenNotFoundException();
         }
 
-        public async Task<Entities.Canteen> GetCanteenWithMealsAndJitMealsByNameAsync(string canteenName)
+        public async Task<Entities.Canteen> GetCanteenWithMealsByNameAsync(string canteenName)
         {
             var canteen = await _dbContext.Canteens
                 .Include(x => x.Meals)
-                .Include(x => x.JitMeals)
                 .FirstOrDefaultAsync(x => x.Name == canteenName);
 
             return canteen ?? throw new CanteenNotFoundException();
@@ -56,7 +55,6 @@ namespace DAB_2_Solution_grp6.DataAccess.Repositories.Canteen
 
             var nearbyCanteens = await _dbContext.Canteens
                 .Include(x => x.Meals)
-                .Include(x => x.JitMeals)
                 .Where(x => x.PostalCode == canteen.PostalCode)
                 .ToListAsync();
 
@@ -80,7 +78,6 @@ namespace DAB_2_Solution_grp6.DataAccess.Repositories.Canteen
                 .Include(x => x.Menus)!
                 .Include(x => x.Ratings)
                 .Include(x => x.Meals)
-                .Include(x => x.JitMeals)
                 .FirstOrDefaultAsync(x => x.Name == canteenName);
 
             return canteen ?? throw new CanteenNotFoundException();

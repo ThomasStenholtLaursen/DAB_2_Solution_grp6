@@ -9,7 +9,6 @@
         public List<Rating>? Ratings { get; private set; } = new();
         public List<Meal>? Meals { get; private set; } = new();
         public List<Menu>? Menus { get; private set; } = new();
-        public List<JitMeal>? JitMeals { get; private set; } = new();
 
         public Canteen(Guid canteenId, string name, string address, string postalCode)
         {

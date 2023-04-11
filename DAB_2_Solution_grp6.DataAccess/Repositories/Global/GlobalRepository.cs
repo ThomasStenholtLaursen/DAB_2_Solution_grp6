@@ -11,9 +11,6 @@
 
         public async Task RemoveAll()
         {
-            var jitMeals = _dbContext.JitMeals.Where(x => true);
-            _dbContext.JitMeals.RemoveRange(jitMeals);
-
             var meals = _dbContext.Meals.Where(x => true);
             _dbContext.Meals.RemoveRange(meals);
 

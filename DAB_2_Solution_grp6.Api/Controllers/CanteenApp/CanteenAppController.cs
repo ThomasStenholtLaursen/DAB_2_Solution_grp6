@@ -134,7 +134,7 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
         }
 
         /// <summary>
-        /// Query (4) Just-in-time meal options and the available (canceled) daily menu
+        /// Query (4) get the available (canceled) meals from the daily menu for a canteen
         /// </summary>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -143,16 +143,13 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
         {
             try
             {
-                var canteen = await _canteenRepository.GetCanteenWithMealsAndJitMealsByNameAsync(canteenName);
+                var canteen = await _canteenRepository.GetCanteenWithMealsByNameAsync(canteenName);
 
                 var canceledMeals = canteen.Meals!.Where(meal => meal.ReservationId == null).ToList();
-
-                var jitMeals = canteen.JitMeals;
 
                 var response = new AvailableMealsResponse
                 {
                     CanceledMeals = _mapper.Map<List<Meal>, List<SimpleMeal>>(canceledMeals),
-                    JitMeals = _mapper.Map<List<JitMeal>, List<SimpleJitMeal>>(jitMeals!)
                 };
 
                 return Ok(response);

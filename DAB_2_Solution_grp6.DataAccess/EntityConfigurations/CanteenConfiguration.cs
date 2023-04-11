@@ -39,12 +39,6 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
                 .HasForeignKey(me => me.CanteenId)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasMany(c => c.JitMeals)
-                .WithOne()
-                .HasForeignKey(jm => jm.CanteenId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
