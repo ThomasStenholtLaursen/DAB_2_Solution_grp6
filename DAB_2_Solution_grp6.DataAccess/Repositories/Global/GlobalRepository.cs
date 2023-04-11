@@ -1,4 +1,6 @@
-﻿namespace DAB_2_Solution_grp6.DataAccess.Repositories.Global
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace DAB_2_Solution_grp6.DataAccess.Repositories.Global
 {
     public class GlobalRepository : IGlobalRepository
     {
@@ -11,22 +13,25 @@
 
         public async Task RemoveAll()
         {
-            var meals = _dbContext.Meals.Where(x => true);
+            var meals = await _dbContext.Meals.ToListAsync();
             _dbContext.Meals.RemoveRange(meals);
 
-            var reservations = _dbContext.Reservations.Where(x => true);
+            var reservations = await _dbContext.Reservations.ToListAsync();
             _dbContext.Reservations.RemoveRange(reservations);
 
-            var ratings = _dbContext.Ratings.Where(x => true);
+            var ratings = await _dbContext.Ratings.ToListAsync();
             _dbContext.Ratings.RemoveRange(ratings);
 
-            var customers = _dbContext.Customers.Where(x => true);
+            var customers = await _dbContext.Customers.ToListAsync();
             _dbContext.Customers.RemoveRange(customers);
 
-            var menus= _dbContext.Menus.Where(x => true);
+            var menus= await _dbContext.Menus.ToListAsync();
             _dbContext.Menus.RemoveRange(menus);
 
-            var canteens = _dbContext.Canteens.Where(x => true);
+            var staff = await _dbContext.Staff.ToListAsync();
+            _dbContext.Staff.RemoveRange(staff);
+
+            var canteens = await _dbContext.Canteens.ToListAsync();
             _dbContext.Canteens.RemoveRange(canteens);
 
             await _dbContext.SaveChangesAsync();

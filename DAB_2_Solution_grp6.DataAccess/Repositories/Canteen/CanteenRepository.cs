@@ -1,5 +1,4 @@
-﻿using System.Xml.Schema;
-using DAB_2_Solution_grp6.DataAccess.Exceptions;
+﻿using DAB_2_Solution_grp6.DataAccess.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAB_2_Solution_grp6.DataAccess.Repositories.Canteen
@@ -63,7 +62,7 @@ namespace DAB_2_Solution_grp6.DataAccess.Repositories.Canteen
             return nearbyCanteens;
         }
 
-        public async Task<IReadOnlyList<Entities.Canteen>> GetAllCanteensWithRatings()
+        public async Task<IReadOnlyList<Entities.Canteen>> GetAllCanteensWithRatingsAsync()
         {
             var canteens = await _dbContext.Canteens
                 .Include(x => x.Ratings)
@@ -72,12 +71,10 @@ namespace DAB_2_Solution_grp6.DataAccess.Repositories.Canteen
             return canteens;
         }
 
-        public async Task<Entities.Canteen> GetCanteenCompleteByNameAsync(string canteenName)
+        public async Task<Entities.Canteen> GetAllCanteenWithStaffByNameAsync(string canteenName)
         {
             var canteen = await _dbContext.Canteens
-                .Include(x => x.Menus)!
-                .Include(x => x.Ratings)
-                .Include(x => x.Meals)
+                .Include(x => x.Staff)
                 .FirstOrDefaultAsync(x => x.Name == canteenName);
 
             return canteen ?? throw new CanteenNotFoundException();

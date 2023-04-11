@@ -5,6 +5,7 @@ using DAB_2_Solution_grp6.Api.Controllers.CanteenApp.Response.Query3;
 using DAB_2_Solution_grp6.Api.Controllers.CanteenApp.Response.Query4;
 using DAB_2_Solution_grp6.Api.Controllers.CanteenApp.Response.Query5;
 using DAB_2_Solution_grp6.Api.Controllers.CanteenApp.Response.Query6;
+using DAB_2_Solution_grp6.Api.Controllers.CanteenApp.Response.Query7;
 using DAB_2_Solution_grp6.DataAccess.Entities;
 using DAB_2_Solution_grp6.DataAccess.Exceptions;
 using DAB_2_Solution_grp6.DataAccess.Repositories.Canteen;
@@ -202,7 +203,7 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
         {
             try
             {
-                var canteens = await _canteenRepository.GetAllCanteensWithRatings();
+                var canteens = await _canteenRepository.GetAllCanteensWithRatingsAsync();
 
                 var canteenRatingResponse = new CanteenRatingResponse
                 {
@@ -216,6 +217,28 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
                 };
 
                 return Ok(canteenRatingResponse);
+            }
+            catch (CanteenNotFoundException)
+            {
+                return BadRequest();
+            }
+        }
+
+        /// <summary>
+        /// Query (7) Payroll of staff for a canteen
+        /// </summary>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpGet("query7/{canteenName}")]
+        public async Task<ActionResult> GetStaffForCanteen(string canteenName)
+        {
+            try
+            {
+                var canteens = await _canteenRepository.GetAllCanteenWithStaffByNameAsync(canteenName);
+
+                var response = _mapper.Map<List<Staff>, List<StaffResponse>>(canteens.Staff);
+                
+                return Ok(response);
             }
             catch (CanteenNotFoundException)
             {

@@ -6,6 +6,7 @@
         public string Name { get; }
         public string Address { get; }
         public string PostalCode { get; }
+        public List<Staff> Staff { get; private set; } = new();
         public List<Rating>? Ratings { get; private set; } = new();
         public List<Meal>? Meals { get; private set; } = new();
         public List<Menu>? Menus { get; private set; } = new();

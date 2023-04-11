@@ -12,6 +12,7 @@ namespace DAB_2_Solution_grp6.DataAccess
         public DbSet<Reservation> Reservations { get; set; } = null!;
         public DbSet<Meal> Meals { get; set; } = null!;
         public DbSet<Menu> Menus { get; set; } = null!;
+        public DbSet<Staff> Staff { get; set; } = null!;
 
         public CanteenAppDbContext(DbContextOptions<CanteenAppDbContext> options) : base(options) { }
 

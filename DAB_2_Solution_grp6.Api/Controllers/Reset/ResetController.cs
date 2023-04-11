@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DAB_2_Solution_grp6.Api.Controllers.Reset
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api")]
     public class ResetController : ControllerBase
     {
         private readonly IGlobalRepository _globalRepository;
@@ -19,28 +19,25 @@ namespace DAB_2_Solution_grp6.Api.Controllers.Reset
         }
 
         /// <summary>
-        /// Clear Database
-        /// </summary>
-        /// <response code="204">Database was cleared</response>
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [HttpDelete]
-        public async Task<ActionResult> ClearDatabase()
-        {
-            await _globalRepository.RemoveAll();
-
-            return StatusCode(StatusCodes.Status204NoContent);
-        }
-
-        /// <summary>
         /// Seed Database (if no data exists)
         /// </summary>
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [HttpPost]
+        [HttpPost("Seed")]
         public async Task<ActionResult> SeedDatabase()
         {
             await DataSeed.Seed(_dbContext);
 
             return Ok();
+        }
+
+        /// <summary>
+        /// Clear Database (REMOVE ALL DATA IN TABLES)
+        /// </summary>
+        [HttpDelete("Clear")]
+        public async Task<ActionResult> ClearDatabase()
+        {
+            await _globalRepository.RemoveAll();
+
+            return StatusCode(StatusCodes.Status204NoContent);
         }
     }
 }

@@ -22,6 +22,12 @@ namespace DAB_2_Solution_grp6.DataAccess.EntityConfigurations
                 .IsRequired()
                 .HasMaxLength(4);
 
+            builder.HasMany(c => c.Staff)
+                .WithOne()
+                .HasForeignKey(s => s.CanteenId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasMany(c => c.Ratings)
                 .WithOne()
                 .HasForeignKey(r => r.CanteenId)
