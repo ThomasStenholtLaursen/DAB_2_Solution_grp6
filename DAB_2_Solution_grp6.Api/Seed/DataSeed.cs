@@ -118,6 +118,8 @@ namespace DAB_2_Solution_grp6.Api.Seed
             {
                 new Reservation(reservationIds[0], 1, 2, DateTime.Now, cprs[0], menuIds[0]),
                 new Reservation(reservationIds[1], 0, 2, DateTime.Now, cprs[1], menuIds[0]),
+                new Reservation(reservationIds[2], 4, 2, DateTime.Now, cprs[2], menuIds[1]),
+
             };
 
             context.Reservations.AddRange(reservations);
@@ -130,7 +132,20 @@ namespace DAB_2_Solution_grp6.Api.Seed
             {
                 new Meal(Guid.NewGuid(), "Soup", canteenIds[0], reservationIds[0]),
                 new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], reservationIds[0]),
-                new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], reservationIds[0])
+                new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], reservationIds[0]),
+                new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], null),
+                new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], null),
+                new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], null),
+                new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], null),
+                new Meal(Guid.NewGuid(), "Lasagne", canteenIds[1], reservationIds[2]),
+                new Meal(Guid.NewGuid(), "Lasagne", canteenIds[1], reservationIds[2]),
+                new Meal(Guid.NewGuid(), "Lasagne", canteenIds[1], reservationIds[2]),
+                new Meal(Guid.NewGuid(), "Lasagne", canteenIds[1], reservationIds[2]),
+                new Meal(Guid.NewGuid(), "Hot Dog", canteenIds[1], reservationIds[2]),
+                new Meal(Guid.NewGuid(), "Hot Dog", canteenIds[1], reservationIds[2]),
+                new Meal(Guid.NewGuid(), "Hot Dog", canteenIds[1], null),
+                new Meal(Guid.NewGuid(), "Hot Dog", canteenIds[1], null),
+                new Meal(Guid.NewGuid(), "Hot Dog", canteenIds[1], null),
             };
 
             context.Meals.AddRange(meals);

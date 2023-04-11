@@ -2,6 +2,6 @@
 {
     public interface IMenuRepository
     {
-        Task<Entities.Menu> GetMenuByIdAsync(Guid id);
+        Task<Guid> GetCanteenIdForMenuAsync(Guid id);
     }
 }

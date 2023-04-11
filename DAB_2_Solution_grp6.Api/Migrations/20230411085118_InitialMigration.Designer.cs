@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAB_2_Solution_grp6.Api.Migrations
 {
     [DbContext(typeof(CanteenAppDbContext))]
-    [Migration("20230408125342_Migration1")]
-    partial class Migration1
+    [Migration("20230411085118_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

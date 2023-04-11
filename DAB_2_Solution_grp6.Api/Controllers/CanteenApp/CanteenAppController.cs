@@ -1,8 +1,13 @@
 ﻿using AutoMapper;
-using DAB_2_Solution_grp6.Api.Controllers.CanteenApp.Response;
+using DAB_2_Solution_grp6.Api.Controllers.CanteenApp.Response.Query1;
+using DAB_2_Solution_grp6.Api.Controllers.CanteenApp.Response.Query2;
+using DAB_2_Solution_grp6.Api.Controllers.CanteenApp.Response.Query3;
+using DAB_2_Solution_grp6.Api.Controllers.CanteenApp.Response.Query4;
+using DAB_2_Solution_grp6.Api.Controllers.CanteenApp.Response.Query5;
+using DAB_2_Solution_grp6.Api.Controllers.CanteenApp.Response.Query6;
+using DAB_2_Solution_grp6.DataAccess.Entities;
 using DAB_2_Solution_grp6.DataAccess.Exceptions;
 using DAB_2_Solution_grp6.DataAccess.Repositories.Canteen;
-using DAB_2_Solution_grp6.DataAccess.Repositories.Global;
 using DAB_2_Solution_grp6.DataAccess.Repositories.Menu;
 using DAB_2_Solution_grp6.DataAccess.Repositories.Reservation;
 using Microsoft.AspNetCore.Mvc;
@@ -14,27 +19,24 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
     public class CanteenAppController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IGlobalRepository _globalRepository;
         private readonly IReservationRepository _reservationRepository;
         private readonly ICanteenRepository _canteenRepository;
         private readonly IMenuRepository _menuRepository;
 
         public CanteenAppController(
-            IMapper mapper, 
-            IGlobalRepository globalRepository, 
-            IReservationRepository reservationRepository, 
-            ICanteenRepository canteenRepository, 
+            IMapper mapper,
+            IReservationRepository reservationRepository,
+            ICanteenRepository canteenRepository,
             IMenuRepository menuRepository)
         {
             _mapper = mapper;
-            _globalRepository = globalRepository;
             _reservationRepository = reservationRepository;
             _canteenRepository = canteenRepository;
             _menuRepository = menuRepository;
         }
 
         /// <summary>
-        /// Gets the day's menu options for a canteen given as input
+        /// Query (1) Gets the day's menu options for a canteen given as input
         /// </summary>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -44,8 +46,8 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
         {
             try
             {
-                var menu = (await _canteenRepository.GetCanteenByNameAsync(canteenName)).Menus!
-                    .FirstOrDefault(x => x.Created.Date == DateTime.Today);
+                var menu = (await _canteenRepository.GetCanteenWithMenusByNameAsync(canteenName)).Menus!
+                    .FirstOrDefault(menu => menu.Created.Date == DateTime.Today);
 
                 var response = _mapper.Map<DailyMenuResponse>(menu);
 
@@ -57,30 +59,46 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
             }
         }
 
-        ///// <summary>
-        ///// Get the reservation for a given customer
-        ///// </summary>
-        ///// <response code="200">The customer was found</response>
-        ///// <response code="404">The customer could not be found</response>
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[HttpGet("customers/{cpr}")]
-        //public async Task<ActionResult> GetReservationById(string cpr)
-        //{
-        //    try
-        //    {
-        //        var reservation = await _reservationRepository.GetReservationById(cpr);
+        /// <summary>
+        /// Query (2) Get the reservation for a given customer
+        /// </summary>
+        /// <response code="200">The customer was found</response>
+        /// <response code="404">The customer could not be found</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("customers/{cpr}")]
+        public async Task<ActionResult> GetReservationById(string cpr)
+        {
+            try
+            {
+                var reservation = await _reservationRepository.GetReservationById(cpr);
 
-        //        return Ok(reservation);
-        //    }
-        //    catch (ReservationNotFoundException)
-        //    {
-        //        return NotFound(cpr);
-        //    }
-        //}
+                var canteenId = await _menuRepository.GetCanteenIdForMenuAsync(reservation.MenuId);
+
+                var canteen = await _canteenRepository.GetCanteenByIdAsync(canteenId);
+
+                var mealReservations = reservation.Meals?.Select(meal => new MealReservationDescription
+                {
+                    MealId = meal.MealId,
+                    MealName = meal.MealName
+                }).ToList() ?? new List<MealReservationDescription>();
+
+                var response = new ReservationForUserResponse
+                {
+                    CanteenName = canteen.Name,
+                    MealReservations = mealReservations
+                };
+
+                return Ok(response);
+            }
+            catch (Exception ex) when (ex is ReservationNotFoundException or MenuNotFoundException)
+            {
+                return NotFound(cpr);
+            }
+        }
 
         /// <summary>
-        /// Number of reservations for each of the daily menu options for a canteen
+        /// Query (3) Number of reservations for each of the daily menu options for a canteen
         /// </summary>
         /// <response code="200">The customer was found</response>
         /// <response code="404">The customer could not be found</response>
@@ -91,37 +109,37 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
         {
             try
             {
-                var canteen = await _canteenRepository.GetCanteenByNameAsync(canteenName);
+                var canteen = await _canteenRepository.GetCanteenWithMenusAndReservationsByNameAsync(canteenName);
 
-                if (canteen.Menus == null) 
+                if (canteen.Menus == null)
                     return NotFound($"Could not find any menus for '{canteenName}'");
 
-                var menu = canteen.Menus.FirstOrDefault(x => x.Created.Date == DateTime.Today);
-                    
+                var menu = canteen.Menus.FirstOrDefault();
+
                 var response = new ReservationsQuantityResponse
                 {
                     WarmDish = new WarmDish
                     {
-                        Amount = menu!.Reservations!.Sum(r => r.WarmQuantity ?? 0),
+                        Amount = menu!.Reservations!.Sum(reservation => reservation.WarmQuantity ?? 0),
                         Name = menu!.WarmDishName
                     },
                     StreetFood = new StreetFood
                     {
-                        Amount = menu!.Reservations!.Sum(r => r.StreetQuantity ?? 0),
+                        Amount = menu!.Reservations!.Sum(reservation => reservation.StreetQuantity ?? 0),
                         Name = menu!.StreetFoodName
                     }
                 };
 
                 return Ok(response);
             }
-            catch (ReservationNotFoundException)
+            catch (CanteenNotFoundException)
             {
                 return NotFound(canteenName);
             }
         }
 
         /// <summary>
-        /// Just-in-time meal options and the available (canceled) daily menu
+        /// Query (4) Just-in-time meal options and the available (canceled) daily menu
         /// </summary>
         /// <response code="200">The customer was found</response>
         /// <response code="404">The customer could not be found</response>
@@ -132,47 +150,91 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
         {
             try
             {
-                var canteen = await _canteenRepository.GetCanteenByNameAsync(canteenName);
+                var canteen = await _canteenRepository.GetCanteenWithMealsAndJitMealsByNameAsync(canteenName);
 
-                var canceledMeals = canteen.Menus!
-                    .FirstOrDefault(x => x.Created.Date == DateTime.Today)?.Reservations!
-                    .SelectMany(x => x.Meals!)
-                    .Where(x => x.ReservationId == null)
-                    .ToList();
+                var canceledMeals = canteen.Meals!.Where(meal => meal.ReservationId == null).ToList();
 
                 var jitMeals = canteen.JitMeals;
 
                 var response = new AvailableMealsResponse
                 {
-                    CanceledMeals = canceledMeals!,
-                    JitMeals = jitMeals!
+                    CanceledMeals = _mapper.Map<List<Meal>, List<SimpleMeal>>(canceledMeals),
+                    JitMeals = _mapper.Map<List<JitMeal>, List<SimpleJitMeal>>(jitMeals!)
                 };
 
                 return Ok(response);
             }
-            catch (Exception)
+            catch (CanteenNotFoundException)
             {
                 return BadRequest(canteenName);
             }
         }
 
+        /// <summary>
+        /// Query (5) available (canceled) daily menu in the nearby canteens
+        /// </summary>
+        /// <response code="200">The customer was found</response>
+        /// <response code="404">The customer could not be found</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpGet("canteens/{canteenName}/nearby")]
+        public async Task<ActionResult> GetAvailableMealsInNearbyCanteen(string canteenName)
+        {
+            try
+            {
+                var nearbyCanteens = await _canteenRepository.GetNearbyCanteenMealsByNameAsync(canteenName);
 
+                var nearbyCanceledMeals = nearbyCanteens.SelectMany(canteen => canteen.Meals!).Where(meal => meal.ReservationId == null).ToList();
 
+                var response = new AvailableNearbyMealsResponse
+                {
+                    NearbyMeals = nearbyCanceledMeals.Select(meal => 
+                        new NearbyMeal
+                        {
+                            CanteenName = nearbyCanteens.FirstOrDefault(canteen => canteen.CanteenId == meal.CanteenId)?.Name!, 
+                            MealName = meal.MealName
+                        }).ToList()
+                };
 
-
-
+                return Ok(response);
+            }
+            catch (CanteenNotFoundException)
+            {
+                return BadRequest(canteenName);
+            }
+        }
 
         /// <summary>
-        /// Clear Database
+        /// Query (6) average ratings from all the canteens from top to bottom
         /// </summary>
-        /// <response code="204">Database was cleared</response>
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [HttpDelete]
-        public async Task<ActionResult> ClearDatabase()
+        /// <response code="200">The customer was found</response>
+        /// <response code="404">The customer could not be found</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpGet("canteens/rating")]
+        public async Task<ActionResult> GetAverageRatingForCanteens()
         {
-            await _globalRepository.RemoveAll();
+            try
+            {
+                var canteens = await _canteenRepository.GetAllCanteensWithRatings();
 
-            return StatusCode(StatusCodes.Status204NoContent);
+                var canteenRatingResponse = new CanteenRatingResponse
+                {
+                    CanteenRatings = canteens.Select(canteen => new CanteenRating
+                    {
+                        Name = canteen.Name,
+                        AvgRating = canteen.Ratings?.Any() == true ? canteen.Ratings.Average(rating => rating.Stars) : 0
+                    })
+                        .OrderByDescending(canteenRating => canteenRating.AvgRating)
+                        .ToList()
+                };
+
+                return Ok(canteenRatingResponse);
+            }
+            catch (CanteenNotFoundException)
+            {
+                return BadRequest();
+            }
         }
     }
 }

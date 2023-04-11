@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DAB_2_Solution_grp6.DataAccess.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAB_2_Solution_grp6.DataAccess.Repositories.Menu
 {
@@ -11,16 +12,16 @@ namespace DAB_2_Solution_grp6.DataAccess.Repositories.Menu
             _dbContext = dbContext;
         }
 
-        public async Task<Entities.Menu> GetMenuByIdAsync(Guid id)
+        public async Task<Guid> GetCanteenIdForMenuAsync(Guid id)
         {
             var menu = await _dbContext.Menus.FirstOrDefaultAsync(x => x.MenuId == id);
 
             if (menu == null)
             {
-                throw new NotImplementedException();
+                throw new MenuNotFoundException();
             }
 
-            return menu;
+            return menu.CanteenId;
         }
     }
 }

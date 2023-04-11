@@ -1,4 +1,4 @@
-﻿namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp.Response
+﻿namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp.Response.Query1
 {
     public class DailyMenuResponse
     {

@@ -2,6 +2,12 @@
 {
     public interface ICanteenRepository
     {
-        Task<Entities.Canteen> GetCanteenByNameAsync(string canteenName);
+        Task<Entities.Canteen> GetCanteenByIdAsync(Guid canteenId);
+        Task<Entities.Canteen> GetCanteenWithMenusByNameAsync(string canteenName);
+        Task<Entities.Canteen> GetCanteenWithMenusAndReservationsByNameAsync(string canteenName);
+        Task<Entities.Canteen> GetCanteenWithMealsAndJitMealsByNameAsync(string canteenName);
+        Task<IReadOnlyList<Entities.Canteen>> GetNearbyCanteenMealsByNameAsync(string canteenName);
+        Task<IReadOnlyList<Entities.Canteen>> GetAllCanteensWithRatings();
+        Task<Entities.Canteen> GetCanteenCompleteByNameAsync(string canteenName);
     }
 }
