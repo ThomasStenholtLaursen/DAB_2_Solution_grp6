@@ -21,7 +21,7 @@ namespace DAB_2_Solution_grp6.Api.Seed
             var auIds = GenerateAuIds(10);
             var canteenIds = GenerateIdentifiers(10);
             var menuIds = GenerateIdentifiers(10);
-            var reservationIds = GenerateIdentifiers(10);
+            var reservationIds = GenerateIdentifiers(20);
 
             await SeedCanteens(context, canteenIds);
             await SeedCustomers(context, auIds);
@@ -108,8 +108,16 @@ namespace DAB_2_Solution_grp6.Api.Seed
             {
                 new Reservation(reservationIds[0], 1, 2, DateTime.Now, auIds[0], menuIds[0]),
                 new Reservation(reservationIds[1], 0, 2, DateTime.Now, auIds[1], menuIds[0]),
-                new Reservation(reservationIds[2], 4, 2, DateTime.Now, auIds[2], menuIds[1]),
-
+                new Reservation(reservationIds[2], 1, 1, DateTime.Now, auIds[3], menuIds[0]),
+                new Reservation(reservationIds[3], 2, 2, DateTime.Now, auIds[2], menuIds[0]),
+                new Reservation(reservationIds[4], 4, 2, DateTime.Now, auIds[2], menuIds[1]), 
+                new Reservation(reservationIds[5], 0, 2, DateTime.Now, auIds[4], menuIds[1]),
+                new Reservation(reservationIds[6], 1, 0, DateTime.Now, auIds[3], menuIds[2]), 
+                new Reservation(reservationIds[7], 0, 1, DateTime.Now, auIds[0], menuIds[2]),
+                new Reservation(reservationIds[8], 1, 1, DateTime.Now, auIds[1], menuIds[3]), 
+                new Reservation(reservationIds[9], 5, 1, DateTime.Now, auIds[2], menuIds[3]),
+                new Reservation(reservationIds[10], 3, 2, DateTime.Now, auIds[4], menuIds[4]),
+                new Reservation(reservationIds[11], 1, 2, DateTime.Now, auIds[3], menuIds[4]),
             };
 
             context.Reservations.AddRange(reservations);
@@ -123,19 +131,74 @@ namespace DAB_2_Solution_grp6.Api.Seed
                 new Meal(Guid.NewGuid(), "Soup", canteenIds[0], reservationIds[0]),
                 new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], reservationIds[0]),
                 new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], reservationIds[0]),
+                new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], reservationIds[1]),
+                new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], reservationIds[1]),
+                new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], reservationIds[2]),
+                new Meal(Guid.NewGuid(), "Soup", canteenIds[0], reservationIds[2]),
+                new Meal(Guid.NewGuid(), "Soup", canteenIds[0], reservationIds[3]),
+                new Meal(Guid.NewGuid(), "Soup", canteenIds[0], reservationIds[3]),
+                new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], reservationIds[3]),
+                new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], reservationIds[3]),
                 new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], null),
                 new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], null),
                 new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], null),
                 new Meal(Guid.NewGuid(), "Pizza", canteenIds[0], null),
-                new Meal(Guid.NewGuid(), "Lasagne", canteenIds[1], reservationIds[2]),
-                new Meal(Guid.NewGuid(), "Lasagne", canteenIds[1], reservationIds[2]),
-                new Meal(Guid.NewGuid(), "Lasagne", canteenIds[1], reservationIds[2]),
-                new Meal(Guid.NewGuid(), "Lasagne", canteenIds[1], reservationIds[2]),
-                new Meal(Guid.NewGuid(), "Hot Dog", canteenIds[1], reservationIds[2]),
-                new Meal(Guid.NewGuid(), "Hot Dog", canteenIds[1], reservationIds[2]),
+                new Meal(Guid.NewGuid(), "Lasagne", canteenIds[1], reservationIds[4]),
+                new Meal(Guid.NewGuid(), "Lasagne", canteenIds[1], reservationIds[4]),
+                new Meal(Guid.NewGuid(), "Lasagne", canteenIds[1], reservationIds[4]),
+                new Meal(Guid.NewGuid(), "Lasagne", canteenIds[1], reservationIds[4]),
+                new Meal(Guid.NewGuid(), "Hot Dog", canteenIds[1], reservationIds[4]),
+                new Meal(Guid.NewGuid(), "Hot Dog", canteenIds[1], reservationIds[4]),
+                new Meal(Guid.NewGuid(), "Hot Dog", canteenIds[1], reservationIds[5]),
+                new Meal(Guid.NewGuid(), "Hot Dog", canteenIds[1], reservationIds[5]),
                 new Meal(Guid.NewGuid(), "Hot Dog", canteenIds[1], null),
                 new Meal(Guid.NewGuid(), "Hot Dog", canteenIds[1], null),
                 new Meal(Guid.NewGuid(), "Hot Dog", canteenIds[1], null),
+                new Meal(Guid.NewGuid(), "Meatballs", canteenIds[2], reservationIds[6]),
+                new Meal(Guid.NewGuid(), "Taco", canteenIds[2], reservationIds[7]),
+                new Meal(Guid.NewGuid(), "Meatballs", canteenIds[2], null),
+                new Meal(Guid.NewGuid(), "Meatballs", canteenIds[2], null),
+                new Meal(Guid.NewGuid(), "Meatballs", canteenIds[2], null),
+                new Meal(Guid.NewGuid(), "Meatballs", canteenIds[2], null),
+                new Meal(Guid.NewGuid(), "Meatballs", canteenIds[2], null),
+                new Meal(Guid.NewGuid(), "Taco", canteenIds[2], null),
+                new Meal(Guid.NewGuid(), "Taco", canteenIds[2], null),
+                new Meal(Guid.NewGuid(), "Taco", canteenIds[2], null),
+                new Meal(Guid.NewGuid(), "Taco", canteenIds[2], null),
+                new Meal(Guid.NewGuid(), "Taco", canteenIds[2], null),
+                new Meal(Guid.NewGuid(), "Taco", canteenIds[2], null),
+                new Meal(Guid.NewGuid(), "Wok", canteenIds[3], reservationIds[8]),
+                new Meal(Guid.NewGuid(), "Kebab", canteenIds[3], reservationIds[8]),
+                new Meal(Guid.NewGuid(), "Kebab", canteenIds[3], reservationIds[9]),
+                new Meal(Guid.NewGuid(), "Wok", canteenIds[3], reservationIds[9]),
+                new Meal(Guid.NewGuid(), "Wok", canteenIds[3], reservationIds[9]),
+                new Meal(Guid.NewGuid(), "Wok", canteenIds[3], reservationIds[9]),
+                new Meal(Guid.NewGuid(), "Wok", canteenIds[3], reservationIds[9]),
+                new Meal(Guid.NewGuid(), "Wok", canteenIds[3], reservationIds[9]),
+                new Meal(Guid.NewGuid(), "Wok", canteenIds[3], null),
+                new Meal(Guid.NewGuid(), "Wok", canteenIds[3], null),
+                new Meal(Guid.NewGuid(), "Wok", canteenIds[3], null),
+                new Meal(Guid.NewGuid(), "Wok", canteenIds[3], null),
+                new Meal(Guid.NewGuid(), "Kebab", canteenIds[3], null),
+                new Meal(Guid.NewGuid(), "Kebab", canteenIds[3], null),
+                new Meal(Guid.NewGuid(), "Kebab", canteenIds[3], null),
+                new Meal(Guid.NewGuid(), "Kebab", canteenIds[3], null),
+                new Meal(Guid.NewGuid(), "Cod with peas", canteenIds[4], reservationIds[10]),
+                new Meal(Guid.NewGuid(), "Cod with peas", canteenIds[4], reservationIds[10]),
+                new Meal(Guid.NewGuid(), "Cod with peas", canteenIds[4], reservationIds[10]),
+                new Meal(Guid.NewGuid(), "Burger", canteenIds[4], reservationIds[10]),
+                new Meal(Guid.NewGuid(), "Burger", canteenIds[4], reservationIds[10]),
+                new Meal(Guid.NewGuid(), "Cod with peas", canteenIds[4], reservationIds[11]),
+                new Meal(Guid.NewGuid(), "Burger", canteenIds[4], reservationIds[11]),
+                new Meal(Guid.NewGuid(), "Burger", canteenIds[4], reservationIds[11]),
+                new Meal(Guid.NewGuid(), "Cod with peas", canteenIds[4], null),
+                new Meal(Guid.NewGuid(), "Cod with peas", canteenIds[4], null),
+                new Meal(Guid.NewGuid(), "Cod with peas", canteenIds[4], null),
+                new Meal(Guid.NewGuid(), "Cod with peas", canteenIds[4], null),
+                new Meal(Guid.NewGuid(), "Cod with peas", canteenIds[4], null),
+                new Meal(Guid.NewGuid(), "Burger", canteenIds[4], null),
+                new Meal(Guid.NewGuid(), "Burger", canteenIds[4], null),
+                new Meal(Guid.NewGuid(), "Burger", canteenIds[4], null),
             };
 
             context.Meals.AddRange(meals);
@@ -156,12 +219,19 @@ namespace DAB_2_Solution_grp6.Api.Seed
                 new Staff(Guid.NewGuid(), canteenIds[1], "Theis L.", "Waiter", 23500),
                 new Staff(Guid.NewGuid(), canteenIds[1], "Wilma F..", "Waiter", 24250),
                 new Staff(Guid.NewGuid(), canteenIds[1], "Kristian E.", "Cleaner", 18000),
+                new Staff(Guid.NewGuid(), canteenIds[2], "Marianne J.", "Cook", 34500),
+                new Staff(Guid.NewGuid(), canteenIds[2], "Rasmus B.", "Waiter", 22500),
+                new Staff(Guid.NewGuid(), canteenIds[3], "Emma K.", "Cleaner", 18750),
+                new Staff(Guid.NewGuid(), canteenIds[3], "Lars P.", "Cook", 36000),
+                new Staff(Guid.NewGuid(), canteenIds[3], "Maria G.", "Waiter", 23000),
+                new Staff(Guid.NewGuid(), canteenIds[4], "Anders S.", "Cook", 35500),
+                new Staff(Guid.NewGuid(), canteenIds[4], "Camilla M.", "Waiter", 24000),
+                new Staff(Guid.NewGuid(), canteenIds[4], "Nikolaj H.", "Cleaner", 18500)
             };
 
             context.Staff.AddRange(staff);
             await context.SaveChangesAsync();
         }
-
 
         private static List<Guid> GenerateIdentifiers(int count)
         {

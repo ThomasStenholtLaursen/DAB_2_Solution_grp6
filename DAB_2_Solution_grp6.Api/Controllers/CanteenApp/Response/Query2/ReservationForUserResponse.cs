@@ -3,7 +3,7 @@
     public class ReservationForUserResponse
     {
         public string CanteenName { get; set; } = null!;
-        public List<MealReservationDescription> MealReservations { get; set; } = new();
+        public List<MealReservationDescription>? MealReservations { get; set; } = new();
     }
 
     public class MealReservationDescription

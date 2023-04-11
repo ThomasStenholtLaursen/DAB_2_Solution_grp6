@@ -9,7 +9,6 @@ using DAB_2_Solution_grp6.Api.Controllers.CanteenApp.Response.Query7;
 using DAB_2_Solution_grp6.DataAccess.Entities;
 using DAB_2_Solution_grp6.DataAccess.Exceptions;
 using DAB_2_Solution_grp6.DataAccess.Repositories.Canteen;
-using DAB_2_Solution_grp6.DataAccess.Repositories.Menu;
 using DAB_2_Solution_grp6.DataAccess.Repositories.Reservation;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,18 +21,15 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
         private readonly IMapper _mapper;
         private readonly IReservationRepository _reservationRepository;
         private readonly ICanteenRepository _canteenRepository;
-        private readonly IMenuRepository _menuRepository;
 
         public CanteenAppController(
             IMapper mapper,
             IReservationRepository reservationRepository,
-            ICanteenRepository canteenRepository,
-            IMenuRepository menuRepository)
+            ICanteenRepository canteenRepository)
         {
             _mapper = mapper;
             _reservationRepository = reservationRepository;
             _canteenRepository = canteenRepository;
-            _menuRepository = menuRepository;
         }
 
         /// <summary>
@@ -69,27 +65,32 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
         {
             try
             {
-                var reservation = await _reservationRepository.GetReservationById(auId);
+                var reservations = await _reservationRepository.GetReservationsById(auId);
 
-                var canteenId = await _menuRepository.GetCanteenIdForMenuAsync(reservation.MenuId);
+                var canteens = await _canteenRepository.GetAllCanteens();
 
-                var canteen = await _canteenRepository.GetCanteenByIdAsync(canteenId);
+                var response = new List<ReservationForUserResponse>();
 
-                var mealReservations = reservation.Meals?.Select(meal => new MealReservationDescription
+                foreach (var reservation in reservations)
                 {
-                    MealId = meal.MealId,
-                    MealName = meal.MealName
-                }).ToList() ?? new List<MealReservationDescription>();
+                    var mealReservationDescriptions = reservation.Meals?.Select(x => new MealReservationDescription
+                    {
+                        MealId = x.MealId,
+                        MealName = x.MealName,
+                    }).ToList();
+                    
+                    var canteen = canteens.FirstOrDefault(x => x.CanteenId == reservation.Meals![0].CanteenId);
 
-                var response = new ReservationForUserResponse
-                {
-                    CanteenName = canteen.Name,
-                    MealReservations = mealReservations
-                };
+                    response.Add(new ReservationForUserResponse
+                    {
+                        CanteenName = canteen!.Name,
+                        MealReservations = mealReservationDescriptions
+                    });
+                }
 
                 return Ok(response);
             }
-            catch (Exception ex) when (ex is ReservationNotFoundException or MenuNotFoundException)
+            catch (ReservationNotFoundException)
             {
                 return NotFound(auId);
             }
