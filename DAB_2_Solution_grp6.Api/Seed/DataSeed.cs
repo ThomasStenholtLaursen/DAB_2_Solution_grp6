@@ -14,7 +14,8 @@ namespace DAB_2_Solution_grp6.Api.Seed
                 await context.Ratings.AnyAsync() ||
                 await context.Menus.AnyAsync() ||
                 await context.Reservations.AnyAsync() ||
-                await context.Meals.AnyAsync();
+                await context.Meals.AnyAsync() ||
+                await context.Staff.AnyAsync();
 
             if (dataExists) return;
 

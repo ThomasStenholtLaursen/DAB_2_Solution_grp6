@@ -42,8 +42,9 @@ namespace DAB_2_Solution_grp6.Api.Controllers.CanteenApp
         {
             try
             {
-                var menu = (await _canteenRepository.GetCanteenWithMenusByNameAsync(canteenName)).Menus!
-                    .FirstOrDefault(menu => menu.Created.Date == DateTime.Today);
+                var canteen = await _canteenRepository.GetCanteenWithMenusByNameAsync(canteenName);
+
+                var menu = canteen.Menus!.FirstOrDefault(menu => menu.Created.Date == DateTime.Today);
 
                 var response = _mapper.Map<DailyMenuResponse>(menu);
 
