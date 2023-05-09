@@ -41,7 +41,8 @@
   },
   "AllowedHosts": "*",
   "ConnectionStrings": {
-    "Database": "Data Source=localhost;User ID=sa;Password=Sqlpassword1;Initial Catalog=DAB_Assignment3_au637137_au597196_au635831;Encrypt=False;Trust Server Certificate=True;" // replace with YOUR MSSQL ConnectionString
+    "Database": "Data Source=localhost;User ID=sa;Password=Sqlpassword1;Initial Catalog=DAB_Assignment3_au637137_au597196_au635831;Encrypt=False;Trust Server Certificate=True;"
+    // replace with YOUR MSSQL ConnectionString
   }
 }
 ```
