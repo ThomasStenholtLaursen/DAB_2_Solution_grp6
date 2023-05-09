@@ -46,4 +46,5 @@
   }
 }
 ```
-If your `ConnectionString` does not contain the following settings: `Encrypt=False;Trust Server Certificate=False;` then please add them. A full `ConnectionString` would look something like this: `"Data Source=localhost;User ID=<SOME_USERID>;Password=<SOME_PASSWORD>;Initial Catalog=<YOUR_CHOSEN_DATABASE_NAME>;Encrypt=False;Trust Server Certificate=False;"`
+If your `ConnectionString` for MSSQL does not contain the following settings: `Encrypt=False;Trust Server Certificate=False;` then please add them. A full `ConnectionString` would look something like this: `"Data Source=localhost;User ID=<SOME_USERID>;Password=<SOME_PASSWORD>;Initial Catalog=<YOUR_CHOSEN_DATABASE_NAME>;Encrypt=False;Trust Server Certificate=False;"`
+A typical `ConnectionString` for MongoDB with Docker would look something like this `"mongodb://localhost:27017"`
